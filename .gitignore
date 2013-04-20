@@ -5,3 +5,5 @@
 *.swo
 local_settings.py
 settings.py
+static_collect/*
+
