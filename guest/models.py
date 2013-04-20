@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image
 
 import os
 
@@ -22,7 +23,6 @@ class Picture(models.Model):
 	created_datetime = models.DateTimeField(auto_now_add=True)
 
 	def make_thumbnail(self):
-		from PIL import Image
 		from cStringIO import StringIO
 		from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -55,6 +55,25 @@ class Picture(models.Model):
 		self.name = self.picture_data.name.split('/')[-1]
 		self.save()
 
+	def save(self, *args, **kwargs):
+		if not self.id and not self.picture_data:
+			return
+
+		super(Picture, self).save(*args, **kwargs)
+
+		pw = self.picture_data.width
+		ph = self.picture_data.height
+
+		if ph > 1024:
+			pw /= (ph / 1024.)
+			pw = int(pw)
+			ph = 1024
+
+
+		filename = str(self.picture_data.path)
+		image = Image.open(filename)
+		image = image.resize((pw, ph), Image.ANTIALIAS)
+		image.save(filename, quality=100)
 
 
 	def __unicode__(self):

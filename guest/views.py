@@ -5,6 +5,10 @@ from django.core.context_processors import csrf
 from django.http import *
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.core.files.base import ContentFile
+from django.core.files import File 
+
+
 
 # 3rd Party
 from PIL import Image
@@ -38,3 +42,29 @@ def add_picture(request):
 		'form': form,
 	})
 	return render_to_response('guest/add.html', variables)
+
+import zipfile
+
+def fileiterator(zipf):
+	with zipfile.ZipFile(zipf, "r", zipfile.ZIP_STORED) as openzip:
+		filelist = openzip.infolist()
+		for f in filelist:
+			yield(f.filename, openzip.read(f))
+
+
+def add_picture_zip(request):
+	if request.method == 'POST':
+		form = UploadFileForm(request.POST, request.FILES, label_suffix='')
+		if form.is_valid():
+			for filename,content in fileiterator(request.FILES['file']):
+				cf = ContentFile(content)
+				picture = Picture()
+				picture.picture_data.save(filename, cf)
+				picture.make_thumbnail()
+	else: 
+		form = UploadFileForm(label_suffix='')
+
+	variables = RequestContext(request, {
+		'form': form,
+	})
+	return render_to_response('guest/add_zip.html', variables)

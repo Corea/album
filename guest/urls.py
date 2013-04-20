@@ -9,4 +9,5 @@ from guest.views import *
 urlpatterns = patterns('',
 	url(r'^$', list_picture),
 	url(r'^add/$', add_picture),
+	url(r'^add_zip/$', add_picture_zip),
 )

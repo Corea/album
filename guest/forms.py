@@ -16,3 +16,7 @@ class AddPictureForm(forms.ModelForm):
 	class Meta:
 		model = Picture
 		exclude = ('name', 'thumbnail_data')
+
+class UploadFileForm(forms.Form):
+	file = forms.FileField()
+

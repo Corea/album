@@ -214,6 +214,23 @@ lightbox = new Lightbox options
     };
 
     Lightbox.prototype.sizeContainer = function(imageWidth, imageHeight) {
+
+	  var maxWidth = 0.8, maxHeight = 0.8;
+	  if (imageWidth > $(document).width() * maxWidth || imageHeight > $(document).height() * maxHeight) {
+		  if (imageWidth / imageHeight > $(document).width() / $(document).height()) {
+			  imageHeight = (imageHeight / imageWidth) * $(document).width() * maxWidth;
+			  imageWidth = $(document).width() * maxWidth;
+		  }
+		  else if (imageWidth / imageHeight < $(document).width() / $(document).height()) {
+			  imageWidth = (imageWidth / imageHeight) * $(document).height() * maxHeight;
+			  imageHeight = $(document).height() * maxHeight;
+		  }
+		  else {
+			  imageWidth = $(document).width() * maxWidth;
+			  imageHeight = $(document).height() * maxHeight;
+		  }
+	  }
+
       var $container, $lightbox, $outerContainer, containerBottomPadding, containerLeftPadding, containerRightPadding, containerTopPadding, newHeight, newWidth, oldHeight, oldWidth,
         _this = this;
       $lightbox = $('#lightbox');
@@ -227,6 +244,8 @@ lightbox = new Lightbox options
       containerLeftPadding = parseInt($container.css('padding-left'), 10);
       newWidth = imageWidth + containerLeftPadding + containerRightPadding;
       newHeight = imageHeight + containerTopPadding + containerBottomPadding;
+
+
       if (newWidth !== oldWidth && newHeight !== oldHeight) {
         $outerContainer.animate({
           width: newWidth,
@@ -247,6 +266,8 @@ lightbox = new Lightbox options
         $lightbox.find('.lb-nextLink').height(newHeight);
         _this.showImage();
       }, this.options.resizeDuration);
+
+	  
     };
 
     Lightbox.prototype.showImage = function() {
