@@ -1,0 +1,37 @@
+body {
+	background: #333;
+}
+
+#ImageList li {
+	list-style: none;
+	float: left;
+	text-align: center;
+}
+#ImageList a {
+	height: 128px;
+	width: 128px;
+
+	float: left;
+	display: block;
+	background: rgba(255, 255, 255, 0.1);
+	padding: 7px;
+	line-height: 128px;
+	vertical-align: middle;
+
+	-webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	-ms-transition: all 0.2s ease-out;
+	-o-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+}
+
+#ImageList a img {
+	vertical-align: middle;
+}
+
+#ImageList a:hover {
+	background-color: #8ad459;
+	-webkit-box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+	box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+}

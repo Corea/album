@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block css %}
+		<link href="/static/css/lightbox.css" rel="stylesheet" >
+{% endblock %}
+
+{% block body %}
+			<ul id="ImageList">
+				{% for item in pictures %}
+				<li><a href="/upload/picture/{{ item.name }}" rel="lightbox[image]">
+					<img src="/upload/thumbnail/{{ item.name }}" alt=""></a></li>
+				{% endfor %}
+			</ul>
+{% endblock %}
+
+{% block script %}
+	<script src="/static/js/lightbox.js"></script>
+{% endblock %}
+
